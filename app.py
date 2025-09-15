@@ -108,3 +108,4 @@ st.markdown(
     f"<hr><center style='color:#aaaaaa;'>© {jahr} | Gerald Günther</center>",
     unsafe_allow_html=True,
 )
+# Minimaler Kommentar hinzugefügt, um eine Änderung für Git zu erzwingen
