@@ -1,5 +1,4 @@
 import streamlit as st
-import pyperclip
 import datetime
 
 # --- Konfiguration ---
@@ -12,6 +11,9 @@ st.markdown(
         .stApp {
             background-color: #2c3e50;
             color: #ffb90f;
+        }
+        h1, h2, h3, h4, h5, h6, p, label, .markdown-text-container {
+            color: #ffb90f !important;
         }
         .stTextInput > div > input {
             background-color: #ecf0f1;
@@ -64,17 +66,41 @@ ergebnis = berechnen(abgerechnet, mengeneinheit, vers)
 
 # Anzeige des Ergebnisses
 if ergebnis is not None:
-    st.markdown(f"### Reparaturanteil: `{ergebnis:.3f}`")
+    st.markdown("### Reparaturanteil:")
+    st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
+
+    # Kopieren per JavaScript
+    st.markdown(
+        """
+        <script>
+        function copyToClipboard(text) {
+          navigator.clipboard.writeText(text).then(function() {
+            alert('✔ Ergebnis wurde in die Zwischenablage kopiert.');
+          }, function(err) {
+            alert('⚠️ Kopieren fehlgeschlagen: ' + err);
+          });
+        }
+        </script>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        f"""
+        <button onclick="copyToClipboard('{ergebnis:.3f}')" style="
+            background-color: #34495e;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        ">📋 Kopieren</button>
+    """,
+        unsafe_allow_html=True,
+    )
 else:
     st.markdown("📝 Bitte gültige Werte eingeben.")
-
-# Kopieren-Button
-if st.button("📋 Kopieren"):
-    if ergebnis is not None:
-        pyperclip.copy(f"{ergebnis:.3f}")
-        st.success("✔ Ergebnis wurde in die Zwischenablage kopiert.")
-    else:
-        st.warning("⚠️ Kein gültiges Ergebnis zum Kopieren.")
 
 # Footer
 jahr = datetime.datetime.now().year
