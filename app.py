@@ -71,12 +71,12 @@ if ergebnis is not None:
 
     # ---- Kopier‑Button für Dezimalwert ----
     if st.button("📋 Kopieren (Dezimal)"):
-        st.experimental_copy_to_clipboard(f"{ergebnis:.3f}")
+        st.copy_to_clipboard(f"{ergebnis:.3f}")
         st.success("✔ Ergebnis wurde in die Zwischenablage kopiert.")
 
     # ---- Kopier‑Button für Integer‑Wert ----
     if st.button("📋 Kopieren (Integer)"):
-        st.experimental_copy_to_clipboard(str(gerundet))
+        st.copy_to_clipboard(str(gerundet))
         st.success("✔ Integer‑Wert wurde in die Zwischenablage kopiert.")
 else:
     st.markdown("📝 Bitte gültige Werte eingeben.")
