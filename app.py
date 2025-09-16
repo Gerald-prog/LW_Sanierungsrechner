@@ -12,7 +12,7 @@ st.markdown(
     <style>
         .stApp {background-color:#2c3e50;color:#ffb90f;}
         h1,h2,h3,h4,h5,h6,p,label,.markdown-text-container {color:#ffb90f !important;}
-        .stTextInput > div > input {background-color:#ecf0.1f1;color:#2c3e50;font-weight:bold;}
+        .stTextInput > div > input {background-color:#ecf0f1;color:#2c3e50;font-weight:bold;}
         .stButton > button {background-color:#34495e;color:white;font-weight:bold;}
     </style>
     """,
@@ -25,16 +25,16 @@ st.markdown(
 VERS_DEFAULT = 3.0
 
 
-def parse_float(value: str):
+def parse_float(v: str):
     try:
-        return float(value.replace(",", "."))
+        return float(v.replace(",", "."))
     except:
         return None
 
 
-def berechnen(abgerechnet, mengeneinheit, versichert):
-    if abgerechnet and mengeneinheit and versichert:
-        return (versichert / abgerechnet) * mengeneinheit
+def berechnen(ab, me, ve):
+    if ab and me and ve:
+        return (ve / ab) * me
     return None
 
 
@@ -43,17 +43,12 @@ def berechnen(abgerechnet, mengeneinheit, versichert):
 # -------------------------------------------------
 st.markdown("## 📊 Reparaturanteil Rechner")
 
-vers_input = st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
-abgerechnet_input = st.text_input("Abgerechnet:")
-mengeneinheit_input = st.text_input("Mengeneinheit:")
+vers = parse_float(
+    st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
+)
+abgerechnet = parse_float(st.text_input("Abgerechnet:"))
+mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
 
-vers = parse_float(vers_input)
-abgerechnet = parse_float(abgerechnet_input)
-mengeneinheit = parse_float(mengeneinheit_input)
-
-# -------------------------------------------------
-#   (Berechnung)
-# -------------------------------------------------
 ergebnis = berechnen(abgerechnet, mengeneinheit, vers)
 
 # -------------------------------------------------
@@ -71,16 +66,47 @@ if ergebnis is not None:
 
     # ---- Kopier‑Button für Dezimalwert ----
     if st.button("📋 Kopieren (Dezimal)"):
-        st.copy_to_clipboard(f"{ergebnis:.3f}")
-        st.success("✔ Ergebnis wurde in die Zwischenablage kopiert.")
+        js = f"""
+        <script>
+        const ta = document.createElement('textarea');
+        ta.value = "{ergebnis:.3f}";
+        document.body.appendChild(ta);
+        ta.select();
+        try {{
+            document.execCommand('copy');
+            alert('✔ Ergebnis wurde kopiert.');
+        }} catch (e) {{
+            alert('⚠️ Kopieren fehlgeschlagen: ' + e);
+        }}
+        document.body.removeChild(ta);
+        </script>
+        """
+        components.html(js, height=0)
 
     # ---- Kopier‑Button für Integer‑Wert ----
     if st.button("📋 Kopieren (Integer)"):
-        st.copy_to_clipboard(str(gerundet))
-        st.success("✔ Integer‑Wert wurde in die Zwischenablage kopiert.")
+        js = f"""
+        <script>
+        const ta = document.createElement('textarea');
+        ta.value = "{gerundet}";
+        document.body.appendChild(ta);
+        ta.select();
+        try {{
+            document.execCommand('copy');
+            alert('✔ Integer‑Wert wurde kopiert.');
+        }} catch (e) {{
+            alert('⚠️ Kopieren fehlgeschlagen: ' + e);
+        }}
+        document.body.removeChild(ta);
+        </script>
+        """
+        components.html(js, height=0)
+
 else:
     st.markdown("📝 Bitte gültige Werte eingeben.")
 
+# -------------------------------------------------
+#   Footer
 # -------------------------------------------------
 jahr = datetime.datetime.now().year
 st.markdown(
