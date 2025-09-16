@@ -69,6 +69,12 @@ if ergebnis is not None:
     st.markdown("### Reparaturanteil:")
     st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
 
+    # 2️⃣ Gerundeter Integer
+    gerundet = round(ergebnis)
+
+    # oder int(ergebnis) für Abrunden
+    st.text_input("Gerundet (Integer)", value=str(gerundet), key="gerundetfeld")
+
     # Kopieren per JavaScript
     st.markdown(
         """
@@ -95,8 +101,19 @@ if ergebnis is not None:
             padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
-        ">📋 Kopieren</button>
-    """,
+        ">📋 Kopieren (Dezimal)</button>
+
+        <button onclick="copyToClipboard('{gerundet}')" style="
+            background-color: #34495e;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-left: 8px;
+            cursor: pointer;
+        ">📋 Kopieren (Integer)</button>
+        """,
         unsafe_allow_html=True,
     )
 else:
