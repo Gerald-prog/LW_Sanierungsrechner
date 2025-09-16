@@ -59,14 +59,14 @@ if ergebnis is not None:
 
     st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
     gerundet = round(ergebnis)
-    st.text_input("Gerundet (Integer)", value=str(gerundet), key="gerundetfeld")
+    st.text_input("Menge in Stück", value=str(gerundet), key="gerundetfeld")
 
     # ---------- Button Dezimal ----------
     if st.button("📋 Kopieren (Dezimal)"):
         st.session_state["copy_text"] = f"{ergebnis:.3f}"
 
     # ---------- Button Integer ----------
-    if st.button("📋 Kopieren (Integer)"):
+    if st.button("📋 Kopieren (Stück)"):
         st.session_state["copy_text"] = str(gerundet)
 
     # ---------- JavaScript‑Snippet ----------
