@@ -67,55 +67,43 @@ ergebnis = berechnen(abgerechnet, mengeneinheit, vers)
 # Anzeige des Ergebnisses
 if ergebnis is not None:
     st.markdown("### Reparaturanteil:")
+
+    # Dezimalwert
     st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
 
-    # 2️⃣ Gerundeter Integer
+    # Gerundeter Integer
     gerundet = round(ergebnis)
 
     # oder int(ergebnis) für Abrunden
     st.text_input("Gerundet (Integer)", value=str(gerundet), key="gerundetfeld")
 
-    # Kopieren per JavaScript
-    st.markdown(
-        """
+    # -------------------------------------------------
+    # 1️⃣ Kopier‑Button für den Dezimalwert
+    # -------------------------------------------------
+    if st.button("📋 Kopieren (Dezimal)"):
+        # JavaScript‑Snippet, das den Text in die Zwischenablage schreibt
+        js = f"""
         <script>
-        function copyToClipboard(text) {
-          navigator.clipboard.writeText(text).then(function() {
-            alert('✔ Ergebnis wurde in die Zwischenablage kopiert.');
-          }, function(err) {
-            alert('⚠️ Kopieren fehlgeschlagen: ' + err);
-          });
-        }
+        navigator.clipboard.writeText("{ergebnis:.3f}")
+            .then(() => alert("✔ Ergebnis wurde kopiert."))
+            .catch(err => alert("⚠️ Kopieren fehlgeschlagen: " + err));
         </script>
-    """,
-        unsafe_allow_html=True,
-    )
+        """
+        components.html(js, height=0)  # rendert das Skript, führt es sofort aus
 
-    st.markdown(
-        f"""
-        <button onclick="copyToClipboard('{ergebnis:.3f}')" style="
-            background-color: #34495e;
-            color: white;
-            font-weight: bold;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        ">📋 Kopieren (Dezimal)</button>
+    # -------------------------------------------------
+    # 2️⃣ Kopier‑Button für den Integer‑Wert
+    # -------------------------------------------------
+    if st.button("📋 Kopieren (Integer)"):
+        js = f"""
+        <script>
+        navigator.clipboard.writeText("{gerundet}")
+            .then(() => alert("✔ Integer‑Wert wurde kopiert."))
+            .catch(err => alert("⚠️ Kopieren fehlgeschlagen: " + err));
+        </script>
+        """
+        components.html(js, height=0)
 
-        <button onclick="copyToClipboard('{gerundet}')" style="
-            background-color: #34495e;
-            color: white;
-            font-weight: bold;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            margin-left: 8px;
-            cursor: pointer;
-        ">📋 Kopieren (Integer)</button>
-        """,
-        unsafe_allow_html=True,
-    )
 else:
     st.markdown("📝 Bitte gültige Werte eingeben.")
 
