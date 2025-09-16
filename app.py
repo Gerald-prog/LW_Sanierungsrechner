@@ -52,7 +52,7 @@ mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
 ergebnis = berechnen(abgerechnet, mengeneinheit, vers)
 
 # -------------------------------------------------
-# Ausgabe
+# Ausgabe & Kopier‑Buttons
 # -------------------------------------------------
 if ergebnis is not None:
     st.markdown("### Reparaturanteil:")
@@ -61,38 +61,34 @@ if ergebnis is not None:
     gerundet = round(ergebnis)
     st.text_input("Gerundet (Integer)", value=str(gerundet), key="gerundetfeld")
 
-    # -------------------------------------------------
-    # 1️⃣ Button „Kopieren (Dezimal)“
-    # -------------------------------------------------
+    # ---------- Button Dezimal ----------
     if st.button("📋 Kopieren (Dezimal)"):
-        # Flag setzen – wird im nächsten Render‑Durchlauf ausgelesen
         st.session_state["copy_text"] = f"{ergebnis:.3f}"
 
-    # -------------------------------------------------
-    # 2️⃣ Button „Kopieren (Integer)“
-    # -------------------------------------------------
+    # ---------- Button Integer ----------
     if st.button("📋 Kopieren (Integer)"):
         st.session_state["copy_text"] = str(gerundet)
 
-    # -------------------------------------------------
-    # JavaScript‑Snippet – wird jedes Mal gerendert,
-    # wenn ein copy‑Flag vorhanden ist
-    # -------------------------------------------------
+    # ---------- JavaScript‑Snippet ----------
+    # Wird nur gerendert, wenn ein Kopier‑Flag existiert
     if "copy_text" in st.session_state:
-        text_to_copy = st.session_state["copy_text"]
-        # Flag wieder entfernen, damit das nächste Mal neu ausgelöst wird
+        text = st.session_state["copy_text"]
+        # Flag wieder entfernen, damit ein neuer Klick erneut funktioniert
         del st.session_state["copy_text"]
 
         js = f"""
         <script>
-        // Moderne Clipboard‑API, mit Fallback
+        // 1️⃣ Fokus sicherstellen
+        if (document.hasFocus && !document.hasFocus()) {{
+            window.focus();
+        }}
+
+        // 2️⃣ Kopier‑Funktion (moderne API + Fallback)
         function copyNow(txt) {{
             if (navigator.clipboard && navigator.clipboard.writeText) {{
-                navigator.clipboard.writeText(txt).then(() => {{
-                    alert('✔ ' + txt + ' kopiert.');
-                }}).catch(err => {{
-                    alert('⚠️ Kopieren fehlgeschlagen: ' + err);
-                }});
+                navigator.clipboard.writeText(txt)
+                    .then(() => alert('✔ ' + txt + ' kopiert.'))
+                    .catch(err => alert('⚠️ Kopieren fehlgeschlagen: ' + err));
             }} else {{
                 const ta = document.createElement('textarea');
                 ta.value = txt;
@@ -107,7 +103,9 @@ if ergebnis is not None:
                 document.body.removeChild(ta);
             }}
         }}
-        copyNow("{text_to_copy}");
+
+        // 3️⃣ sofort ausführen
+        copyNow("{text}");
         </script>
         """
         # height=0 → kein sichtbarer Platz
