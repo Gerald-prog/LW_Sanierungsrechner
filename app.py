@@ -52,105 +52,66 @@ mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
 ergebnis = berechnen(abgerechnet, mengeneinheit, vers)
 
 # -------------------------------------------------
-# Ausgabe + Kopier‑Buttons
+# Ausgabe
 # -------------------------------------------------
 if ergebnis is not None:
     st.markdown("### Reparaturanteil:")
 
-    # Dezimalwert
     st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
-
-    # Gerundeter Integer
     gerundet = round(ergebnis)
     st.text_input("Gerundet (Integer)", value=str(gerundet), key="gerundetfeld")
 
     # -------------------------------------------------
-    # 1️⃣ Button für Dezimalwert
+    # 1️⃣ Button „Kopieren (Dezimal)“
     # -------------------------------------------------
-    dec_btn_id = "copy-dec-btn"
-    st.markdown(
-        f"""
-        <button id="{dec_btn_id}"
-                style="
-                    background-color:#34495e;
-                    color:white;
-                    font-weight:bold;
-                    border:none;
-                    padding:8px 16px;
-                    border-radius:4px;
-                    cursor:pointer;
-                ">
-            📋 Kopieren (Dezimal)
-        </button>
-        """,
-        unsafe_allow_html=True,
-    )
+    if st.button("📋 Kopieren (Dezimal)"):
+        # Flag setzen – wird im nächsten Render‑Durchlauf ausgelesen
+        st.session_state["copy_text"] = f"{ergebnis:.3f}"
 
     # -------------------------------------------------
-    # 2️⃣ Button für Integer‑Wert
+    # 2️⃣ Button „Kopieren (Integer)“
     # -------------------------------------------------
-    int_btn_id = "copy-int-btn"
-    st.markdown(
-        f"""
-        <button id="{int_btn_id}"
-                style="
-                    background-color:#34495e;
-                    color:white;
-                    font-weight:bold;
-                    border:none;
-                    padding:8px 16px;
-                    border-radius:4px;
-                    margin-left:8px;
-                    cursor:pointer;
-                ">
-            📋 Kopieren (Integer)
-        </button>
-        """,
-        unsafe_allow_html=True,
-    )
+    if st.button("📋 Kopieren (Integer)"):
+        st.session_state["copy_text"] = str(gerundet)
 
     # -------------------------------------------------
-    # JavaScript‑Listener (einmalig einbinden)
+    # JavaScript‑Snippet – wird jedes Mal gerendert,
+    # wenn ein copy‑Flag vorhanden ist
     # -------------------------------------------------
-    js = f"""
-    <script>
-    // Funktion, die den Text in die Zwischenablage schreibt
-    function copyText(text) {{
-        // Moderne API, fallback zu execCommand
-        if (navigator.clipboard && navigator.clipboard.writeText) {{
-            navigator.clipboard.writeText(text).then(() => {{
-                alert('✔ ' + text + ' kopiert.');
-            }}).catch(err => {{
-                alert('⚠️ Kopieren fehlgeschlagen: ' + err);
-            }});
-        }} else {{
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            document.body.appendChild(ta);
-            ta.select();
-            try {{
-                document.execCommand('copy');
-                alert('✔ ' + text + ' kopiert.');
-            }} catch (e) {{
-                alert('⚠️ Kopieren fehlgeschlagen: ' + e);
+    if "copy_text" in st.session_state:
+        text_to_copy = st.session_state["copy_text"]
+        # Flag wieder entfernen, damit das nächste Mal neu ausgelöst wird
+        del st.session_state["copy_text"]
+
+        js = f"""
+        <script>
+        // Moderne Clipboard‑API, mit Fallback
+        function copyNow(txt) {{
+            if (navigator.clipboard && navigator.clipboard.writeText) {{
+                navigator.clipboard.writeText(txt).then(() => {{
+                    alert('✔ ' + txt + ' kopiert.');
+                }}).catch(err => {{
+                    alert('⚠️ Kopieren fehlgeschlagen: ' + err);
+                }});
+            }} else {{
+                const ta = document.createElement('textarea');
+                ta.value = txt;
+                document.body.appendChild(ta);
+                ta.select();
+                try {{
+                    document.execCommand('copy');
+                    alert('✔ ' + txt + ' kopiert.');
+                }} catch (e) {{
+                    alert('⚠️ Kopieren fehlgeschlagen: ' + e);
+                }}
+                document.body.removeChild(ta);
             }}
-            document.body.removeChild(ta);
         }}
-    }}
-
-    // Listener für den Dezimal‑Button
-    document.getElementById('{dec_btn_id}').addEventListener('click', function() {{
-        copyText("{ergebnis:.3f}");
-    }});
-
-    // Listener für den Integer‑Button
-    document.getElementById('{int_btn_id}').addEventListener('click', function() {{
-        copyText("{gerundet}");
-    }});
-    </script>
-    """
-    # Das HTML‑Fragment wird ohne sichtbaren Platz gerendert
-    components.html(js, height=0)
+        copyNow("{text_to_copy}");
+        </script>
+        """
+        # height=0 → kein sichtbarer Platz
+        components.html(js, height=0)
 
 else:
     st.markdown("📝 Bitte gültige Werte eingeben.")
