@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 import datetime
 
 # -------------------------------------------------
-#   Layout & Styles (wie gehabt)
+# Layout & Styles (wie gehabt)
 # -------------------------------------------------
 st.set_page_config(page_title="LW_Sanierungsrechner", page_icon="📊", layout="centered")
 
@@ -20,7 +20,7 @@ st.markdown(
 )
 
 # -------------------------------------------------
-#   Konstanten & Hilfsfunktionen
+# Konstanten & Hilfsfunktionen
 # -------------------------------------------------
 VERS_DEFAULT = 3.0
 
@@ -39,7 +39,7 @@ def berechnen(ab, me, ve):
 
 
 # -------------------------------------------------
-#   UI – Eingaben
+# UI – Eingaben
 # -------------------------------------------------
 st.markdown("## 📊 Reparaturanteil Rechner")
 
@@ -52,7 +52,7 @@ mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
 ergebnis = berechnen(abgerechnet, mengeneinheit, vers)
 
 # -------------------------------------------------
-#   Ausgabe + Kopier‑Buttons
+# Ausgabe + Kopier‑Buttons
 # -------------------------------------------------
 if ergebnis is not None:
     st.markdown("### Reparaturanteil:")
@@ -64,49 +64,99 @@ if ergebnis is not None:
     gerundet = round(ergebnis)
     st.text_input("Gerundet (Integer)", value=str(gerundet), key="gerundetfeld")
 
-    # ---- Kopier‑Button für Dezimalwert ----
-    if st.button("📋 Kopieren (Dezimal)"):
-        js = f"""
-        <script>
-        const ta = document.createElement('textarea');
-        ta.value = "{ergebnis:.3f}";
-        document.body.appendChild(ta);
-        ta.select();
-        try {{
-            document.execCommand('copy');
-            alert('✔ Ergebnis wurde kopiert.');
-        }} catch (e) {{
-            alert('⚠️ Kopieren fehlgeschlagen: ' + e);
-        }}
-        document.body.removeChild(ta);
-        </script>
-        """
-        components.html(js, height=0)
+    # -------------------------------------------------
+    # 1️⃣ Button für Dezimalwert
+    # -------------------------------------------------
+    dec_btn_id = "copy-dec-btn"
+    st.markdown(
+        f"""
+        <button id="{dec_btn_id}"
+                style="
+                    background-color:#34495e;
+                    color:white;
+                    font-weight:bold;
+                    border:none;
+                    padding:8px 16px;
+                    border-radius:4px;
+                    cursor:pointer;
+                ">
+            📋 Kopieren (Dezimal)
+        </button>
+        """,
+        unsafe_allow_html=True,
+    )
 
-    # ---- Kopier‑Button für Integer‑Wert ----
-    if st.button("📋 Kopieren (Integer)"):
-        js = f"""
-        <script>
-        const ta = document.createElement('textarea');
-        ta.value = "{gerundet}";
-        document.body.appendChild(ta);
-        ta.select();
-        try {{
-            document.execCommand('copy');
-            alert('✔ Integer‑Wert wurde kopiert.');
-        }} catch (e) {{
-            alert('⚠️ Kopieren fehlgeschlagen: ' + e);
+    # -------------------------------------------------
+    # 2️⃣ Button für Integer‑Wert
+    # -------------------------------------------------
+    int_btn_id = "copy-int-btn"
+    st.markdown(
+        f"""
+        <button id="{int_btn_id}"
+                style="
+                    background-color:#34495e;
+                    color:white;
+                    font-weight:bold;
+                    border:none;
+                    padding:8px 16px;
+                    border-radius:4px;
+                    margin-left:8px;
+                    cursor:pointer;
+                ">
+            📋 Kopieren (Integer)
+        </button>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # -------------------------------------------------
+    # JavaScript‑Listener (einmalig einbinden)
+    # -------------------------------------------------
+    js = f"""
+    <script>
+    // Funktion, die den Text in die Zwischenablage schreibt
+    function copyText(text) {{
+        // Moderne API, fallback zu execCommand
+        if (navigator.clipboard && navigator.clipboard.writeText) {{
+            navigator.clipboard.writeText(text).then(() => {{
+                alert('✔ ' + text + ' kopiert.');
+            }}).catch(err => {{
+                alert('⚠️ Kopieren fehlgeschlagen: ' + err);
+            }});
+        }} else {{
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            try {{
+                document.execCommand('copy');
+                alert('✔ ' + text + ' kopiert.');
+            }} catch (e) {{
+                alert('⚠️ Kopieren fehlgeschlagen: ' + e);
+            }}
+            document.body.removeChild(ta);
         }}
-        document.body.removeChild(ta);
-        </script>
-        """
-        components.html(js, height=0)
+    }}
+
+    // Listener für den Dezimal‑Button
+    document.getElementById('{dec_btn_id}').addEventListener('click', function() {{
+        copyText("{ergebnis:.3f}");
+    }});
+
+    // Listener für den Integer‑Button
+    document.getElementById('{int_btn_id}').addEventListener('click', function() {{
+        copyText("{gerundet}");
+    }});
+    </script>
+    """
+    # Das HTML‑Fragment wird ohne sichtbaren Platz gerendert
+    components.html(js, height=0)
 
 else:
     st.markdown("📝 Bitte gültige Werte eingeben.")
 
 # -------------------------------------------------
-#   Footer
+# Footer
 # -------------------------------------------------
 jahr = datetime.datetime.now().year
 st.markdown(
