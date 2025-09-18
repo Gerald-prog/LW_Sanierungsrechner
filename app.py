@@ -41,7 +41,7 @@ def berechnen(ab, me, ve):
 
 def stk_setzen(wert, ergebnis):
     # 1. Bedingung: Wenn der Wert kleiner als 1 ist, setze ihn auf 1
-    if ergebnis < 1:
+    if wert < 1:
         wert = 1
 
     # 2. Bedingung: Wenn der Wert größer als (ergebnis + 0.2) ist,
