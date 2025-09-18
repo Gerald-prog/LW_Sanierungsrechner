@@ -1,6 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 import datetime
+import math
 
 # -------------------------------------------------
 # Layout & Styles (wie gehabt)
@@ -38,6 +39,19 @@ def berechnen(ab, me, ve):
     return None
 
 
+def stk_setzen(wert, ergebnis):
+    # 1. Bedingung: Wenn der Wert kleiner als 1 ist, setze ihn auf 1
+    if wert < 1:
+        wert = 1
+
+    # 2. Bedingung: Wenn der Wert größer als (ergebnis + 0.2) ist,
+    # dann verwende ceil, sonst floor
+    if wert > (ergebnis + 0.2):
+        return math.ceil(wert)
+    else:
+        return math.floor(wert)
+
+
 # -------------------------------------------------
 # UI – Eingaben
 # -------------------------------------------------
@@ -58,7 +72,7 @@ if ergebnis is not None:
     st.markdown("### Reparaturanteil:")
 
     st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
-    gerundet = round(ergebnis)
+    gerundet = round(stk_setzen)
     st.text_input("Menge in Stück", value=str(gerundet), key="gerundetfeld")
 
     # ---------- Button Dezimal ----------
