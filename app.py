@@ -74,7 +74,7 @@ if ergebnis is not None:
     st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
 
     # Sicherheitsprüfung das ergebnis nicht None ist
-    gerundet = stk_setzen(ergebnis, wert=ergebnis)
+    gerundet = round(ergebnis)
 
     st.text_input(
         "Menge in Stück",
@@ -143,3 +143,4 @@ st.markdown(
     f"<hr><center style='color:#aaaaaa;'>© {jahr} | Gerald Günther</center>",
     unsafe_allow_html=True,
 )
+#'eins zwei drei'
