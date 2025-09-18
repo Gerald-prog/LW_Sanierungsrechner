@@ -49,7 +49,7 @@ vers = parse_float(
 abgerechnet = parse_float(st.text_input("Abgerechnet:"))
 mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
 
-ergebnis = berechnen(abgerechnet, mengeneinheit, vers)
+ergebnis = round(berechnen(abgerechnet, mengeneinheit, vers), 3)
 
 # -------------------------------------------------
 # Ausgabe & Kopier‑Buttons
