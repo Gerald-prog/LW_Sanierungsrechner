@@ -79,7 +79,7 @@ if ergebnis is not None:
     st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
 
     # Sicherheitsprüfung das ergebnis nicht None ist
-    gerundet = stk_setzen(ergebnis, wert=ergebnis)
+    gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
     # round(ergebnis) if ergebnis is not None else ""
 
     st.text_input(
