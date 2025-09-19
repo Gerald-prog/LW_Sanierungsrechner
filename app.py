@@ -41,12 +41,13 @@ def berechnen(ab, me, ve):
 
 def stk_setzen(wert, ergebnis):
     # 1. Bedingung: Wenn der Wert kleiner als 1 ist, setze ihn auf 1
-    if wert < 1:
+    if ergebnis < 1:
         wert = 1
 
-    # 2. Bedingung: Wenn der Wert größer als (ergebnis + 0.2) ist,
+    # 2. Bedingung: Wenn der Wert größer als floor(ergebnis) + 0.2 ist,
     # dann verwende ceil, sonst floor
-    if ergebnis > (ergebnis + 0.2):
+    floor_ergebnis = math.floor(ergebnis)
+    if ergebnis > (floor_ergebnis + 0.2):
         return math.ceil(wert)
     else:
         return math.floor(wert)
@@ -78,7 +79,8 @@ if ergebnis is not None:
     st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
 
     # Sicherheitsprüfung das ergebnis nicht None ist
-    gerundet = round(ergebnis) if ergebnis is not None else ""
+    gerundet = stk_setzen(ergebnis)
+    # round(ergebnis) if ergebnis is not None else ""
 
     st.text_input(
         "Menge in Stück",
