@@ -44,11 +44,15 @@ def stk_setzen(wert, ergebnis):
     if ergebnis < 1:
         wert = 1
 
+    # Berechnung und Ausgabe des Wertes
+    berechnungswert = VERS_DEFAULT / abgerechnet
+    print(f"Berechnungswert (VERS_DEFAULT / abgerechnet): {berechnungswert}")
+
     # 2. Bedingung: Wenn der Wert größer als
     # floor(ergebnis) + (VERS_DEFAULT/ abgerechnet) ist,
     # dann verwende ceil, sonst floor
     floor_ergebnis = math.floor(ergebnis)
-    if ergebnis > (floor_ergebnis + (VERS_DEFAULT / abgerechnet)):
+    if ergebnis > (floor_ergebnis + berechnungswert):
         return math.ceil(wert)
     else:
         return math.floor(wert)
