@@ -40,19 +40,16 @@ def berechnen(ab, me, ve):
 
 
 def stk_setzen(wert, ergebnis):
-    # 1. Bedingung: Wenn der Wert kleiner als 1 ist, setze ihn auf 1
-    if ergebnis < 1:
-        wert = 1
 
-    # Berechnung und Ausgabe des Wertes
-    berechnungswert = VERS_DEFAULT / abgerechnet
-    print(f"Berechnungswert (VERS_DEFAULT / abgerechnet): {berechnungswert}")
+    # 1. Bedingung: Wenn der Wert kleiner als 1 ist, setze ihn auf 1
+    if wert < 1:
+        wert = 1
 
     # 2. Bedingung: Wenn der Wert größer als
     # floor(ergebnis) + (VERS_DEFAULT/ abgerechnet) ist,
     # dann verwende ceil, sonst floor
     floor_ergebnis = math.floor(ergebnis)
-    if ergebnis > (floor_ergebnis + berechnungswert):
+    if wert > (floor_ergebnis + 0.2):
         return math.ceil(wert)
     else:
         return math.floor(wert)
