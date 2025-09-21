@@ -55,7 +55,7 @@ def stk_setzen(wert, ergebnis):
     # floor(ergebnis) + (VERS_DEFAULT/ abgerechnet) ist,
     # dann verwende ceil, sonst floor
     floor_ergebnis = math.floor(ergebnis)
-    if wert > (floor_ergebnis + reparatur_faktor(vers, abgerechnet)):
+    if wert > (floor_ergebnis + 0.2):
         return math.ceil(wert)
     else:
         return math.floor(wert)
