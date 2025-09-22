@@ -90,66 +90,67 @@ with col2:
 if ergebnis is not None:
     st.markdown("### Reparaturanteil:")
 
-    st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
+    with col1:
+        st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
 
-    # Sicherheitsprüfung das ergebnis nicht None ist
-    gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
+        # Sicherheitsprüfung das ergebnis nicht None ist
+        gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
 
-    st.text_input(
-        "Menge in Stück",
-        value=str(gerundet) if gerundet is not None else "",
-        key="gerundetfeld",
-    )
+        st.text_input(
+            "Menge in Stück",
+            value=str(gerundet) if gerundet is not None else "",
+            key="gerundetfeld",
+        )
 
-    # ---------- Button Dezimal ----------
-    if st.button("📋 Kopieren (Dezimal)"):
-        st.session_state["copy_text"] = f"{ergebnis:.3f}"
+        # ---------- Button Dezimal ----------
+        if st.button("📋 Kopieren (Dezimal)"):
+            st.session_state["copy_text"] = f"{ergebnis:.3f}"
 
-    # ---------- Button Integer ----------
-    if st.button("📋 Kopieren (Stück)"):
-        st.session_state["copy_text"] = str(gerundet)
+        # ---------- Button Integer ----------
+        if st.button("📋 Kopieren (Stück)"):
+            st.session_state["copy_text"] = str(gerundet)
 
-    # ---------- JavaScript‑Snippet ----------
-    # Wird nur gerendert, wenn ein Kopier‑Flag existiert
-    if "copy_text" in st.session_state:
-        text = st.session_state["copy_text"]
-        # Flag wieder entfernen, damit ein neuer Klick erneut funktioniert
-        del st.session_state["copy_text"]
+        # ---------- JavaScript‑Snippet ----------
+        # Wird nur gerendert, wenn ein Kopier‑Flag existiert
+        if "copy_text" in st.session_state:
+            text = st.session_state["copy_text"]
+            # Flag wieder entfernen, damit ein neuer Klick erneut funktioniert
+            del st.session_state["copy_text"]
 
-        js = f"""
-        <script>
-        // 1️⃣ Fokus sicherstellen
-        if (document.hasFocus && !document.hasFocus()) {{
-            window.focus();
-        }}
-
-        // 2️⃣ Kopier‑Funktion (moderne API + Fallback)
-        function copyNow(txt) {{
-            if (navigator.clipboard && navigator.clipboard.writeText) {{
-                navigator.clipboard.writeText(txt)
-                    .then(() => alert('✔ ' + txt + ' kopiert.'))
-                    .catch(err => alert('⚠️ Kopieren fehlgeschlagen: ' + err));
-            }} else {{
-                const ta = document.createElement('textarea');
-                ta.value = txt;
-                document.body.appendChild(ta);
-                ta.select();
-                try {{
-                    document.execCommand('copy');
-                    alert('✔ ' + txt + ' kopiert.');
-                }} catch (e) {{
-                    alert('⚠️ Kopieren fehlgeschlagen: ' + e);
-                }}
-                document.body.removeChild(ta);
+            js = f"""
+            <script>
+            // 1️⃣ Fokus sicherstellen
+            if (document.hasFocus && !document.hasFocus()) {{
+                window.focus();
             }}
-        }}
 
-        // 3️⃣ sofort ausführen
-        copyNow("{text}");
-        </script>
-        """
-        # height=0 → kein sichtbarer Platz
-        components.html(js, height=0)
+            // 2️⃣ Kopier‑Funktion (moderne API + Fallback)
+            function copyNow(txt) {{
+                if (navigator.clipboard && navigator.clipboard.writeText) {{
+                    navigator.clipboard.writeText(txt)
+                        .then(() => alert('✔ ' + txt + ' kopiert.'))
+                        .catch(err => alert('⚠️ Kopieren fehlgeschlagen: ' + err));
+                }} else {{
+                    const ta = document.createElement('textarea');
+                    ta.value = txt;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try {{
+                        document.execCommand('copy');
+                        alert('✔ ' + txt + ' kopiert.');
+                    }} catch (e) {{
+                        alert('⚠️ Kopieren fehlgeschlagen: ' + e);
+                    }}
+                    document.body.removeChild(ta);
+                }}
+            }}
+
+            // 3️⃣ sofort ausführen
+            copyNow("{text}");
+            </script>
+            """
+            # height=0 → kein sichtbarer Platz
+            components.html(js, height=0)
 
 else:
     st.markdown("📝 Bitte gültige Werte eingeben.")
