@@ -88,24 +88,26 @@ with col1:
 if ergebnis is not None:
     st.markdown("### Reparaturanteil:")
 
-    st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
+    with col1:
 
-    # Sicherheitsprüfung das ergebnis nicht None ist
-    gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
+        st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
 
-    st.text_input(
-        "Menge in Stück",
-        value=str(gerundet) if gerundet is not None else "",
-        key="gerundetfeld",
-    )
+        # Sicherheitsprüfung das ergebnis nicht None ist
+        gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
 
-    # ---------- Button Dezimal ----------
-    if st.button("📋 Kopieren (Dezimal)"):
-        st.session_state["copy_text"] = f"{ergebnis:.3f}"
+        st.text_input(
+            "Menge in Stück",
+            value=str(gerundet) if gerundet is not None else "",
+            key="gerundetfeld",
+        )
 
-    # ---------- Button Integer ----------
-    if st.button("📋 Kopieren (Stück)"):
-        st.session_state["copy_text"] = str(gerundet)
+        # ---------- Button Dezimal ----------
+        if st.button("📋 Kopieren (Dezimal)"):
+            st.session_state["copy_text"] = f"{ergebnis:.3f}"
+
+        # ---------- Button Integer ----------
+        if st.button("📋 Kopieren (Stück)"):
+            st.session_state["copy_text"] = str(gerundet)
 
     with col2:
         faktor = (
@@ -171,4 +173,3 @@ st.markdown(
     f"<hr><center style='color:#aaaaaa;'>© {jahr} | Gerald Günther</center>",
     unsafe_allow_html=True,
 )
-#'eins zwei drei'
