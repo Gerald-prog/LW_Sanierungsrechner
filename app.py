@@ -81,8 +81,6 @@ with col1:
         else None
     )
 
-with col2:
-    faktor = reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
 
 # -------------------------------------------------
 # Ausgabe & Kopier‑Buttons
@@ -90,29 +88,32 @@ with col2:
 if ergebnis is not None:
     st.markdown("### Reparaturanteil:")
 
-    with col1:
-        st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
+    st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
 
-        # Sicherheitsprüfung das ergebnis nicht None ist
-        gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
+    # Sicherheitsprüfung das ergebnis nicht None ist
+    gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
 
-        st.text_input(
-            "Menge in Stück",
-            value=str(gerundet) if gerundet is not None else "",
-            key="gerundetfeld",
-        )
+    st.text_input(
+        "Menge in Stück",
+        value=str(gerundet) if gerundet is not None else "",
+        key="gerundetfeld",
+    )
 
-        # ---------- Button Dezimal ----------
-        if st.button("📋 Kopieren (Dezimal)"):
-            st.session_state["copy_text"] = f"{ergebnis:.3f}"
+    # ---------- Button Dezimal ----------
+    if st.button("📋 Kopieren (Dezimal)"):
+        st.session_state["copy_text"] = f"{ergebnis:.3f}"
 
-        # ---------- Button Integer ----------
-        if st.button("📋 Kopieren (Stück)"):
-            st.session_state["copy_text"] = str(gerundet)
+    # ---------- Button Integer ----------
+    if st.button("📋 Kopieren (Stück)"):
+        st.session_state["copy_text"] = str(gerundet)
 
     with col2:
+        faktor = (
+            reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
+        )
+
         st.text_input(
-            "Reparatur-Faktor (zum Eintrag im Bemerkungstext)",
+            "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
             value=f"{faktor:.3f}",
             key="faktorfeld",
         )
