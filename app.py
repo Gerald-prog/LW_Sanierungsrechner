@@ -110,6 +110,9 @@ if ergebnis is not None:
         if st.button("📋 Kopieren (Stück)"):
             st.session_state["copy_text"] = str(gerundet)
 
+    with col2:
+        st.text_input("Reparator-Faktor", value=f"{faktor:.3f}", key="faktorfeld")
+
         # ---------- JavaScript‑Snippet ----------
         # Wird nur gerendert, wenn ein Kopier‑Flag existiert
         if "copy_text" in st.session_state:
