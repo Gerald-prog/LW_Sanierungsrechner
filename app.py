@@ -66,7 +66,7 @@ def stk_setzen(wert, ergebnis):
 # -------------------------------------------------
 st.markdown("## 📊 Reparaturanteil Rechner")
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns(1, 1)
 
 with col1:
     vers = parse_float(
@@ -111,7 +111,11 @@ if ergebnis is not None:
             st.session_state["copy_text"] = str(gerundet)
 
     with col2:
-        st.text_input("Reparator-Faktor", value=f"{faktor:.3f}", key="faktorfeld")
+        st.text_input(
+            "Reparatur-Faktor (zum Eintrag im Bemerkungstext)",
+            value=f"{faktor:.3f}",
+            key="faktorfeld",
+        )
 
         # ---------- JavaScript‑Snippet ----------
         # Wird nur gerendert, wenn ein Kopier‑Flag existiert
