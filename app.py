@@ -66,17 +66,23 @@ def stk_setzen(wert, ergebnis):
 # -------------------------------------------------
 st.markdown("## 📊 Reparaturanteil Rechner")
 
-vers = parse_float(
-    st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
-)
-abgerechnet = parse_float(st.text_input("Abgerechnet:"))
-mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
+col1, col2 = st.columns(2)
 
-ergebnis = (
-    round(berechnen(abgerechnet, mengeneinheit, vers), 3)
-    if all([abgerechnet, mengeneinheit, vers])
-    else None
-)
+with col1:
+    vers = parse_float(
+        st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
+    )
+    abgerechnet = parse_float(st.text_input("Abgerechnet:"))
+    mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
+
+    ergebnis = (
+        round(berechnen(abgerechnet, mengeneinheit, vers), 3)
+        if all([abgerechnet, mengeneinheit, vers])
+        else None
+    )
+
+with col2:
+    faktor = reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
 
 # -------------------------------------------------
 # Ausgabe & Kopier‑Buttons
