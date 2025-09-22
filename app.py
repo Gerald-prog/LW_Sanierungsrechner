@@ -86,9 +86,10 @@ with col1:
 # Ausgabe & Kopier‑Buttons
 # -------------------------------------------------
 if ergebnis is not None:
-    st.markdown("### Reparaturanteil:")
 
     with col1:
+
+        st.markdown("### Reparaturanteil:")
 
         st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
 
