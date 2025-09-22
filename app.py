@@ -66,7 +66,7 @@ def stk_setzen(wert, ergebnis):
 # -------------------------------------------------
 st.markdown("## 📊 Reparaturanteil Rechner")
 
-col1, col2 = st.columns([0.75, 0.75])
+col1, col2 = st.columns([0.5, 0.5])
 
 with col1:
     vers = parse_float(
