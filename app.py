@@ -121,6 +121,9 @@ if ergebnis is not None:
             key="faktorfeld",
         )
 
+        if st.button("Kopieren"):
+            st.session_state["copy_text"] = str(faktor)
+
         # ---------- JavaScript‑Snippet ----------
         # Wird nur gerendert, wenn ein Kopier‑Flag existiert
         if "copy_text" in st.session_state:
