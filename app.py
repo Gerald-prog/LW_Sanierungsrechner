@@ -61,6 +61,15 @@ def stk_setzen(wert, ergebnis):
         return math.floor(wert)
 
 
+# Pfad zur Textdatei
+text_file_path = "lw_text.txt"
+
+
+def lese_text_datei(file_path):
+    with open(file_path, "r") as file:
+        return file.read()
+
+
 # -------------------------------------------------
 # UI – Eingaben
 # -------------------------------------------------
@@ -123,6 +132,18 @@ if ergebnis is not None:
 
         if st.button("📋 Kopieren"):
             st.session_state["copy_text"] = str(faktor)
+
+        # Lesen der Textdatei
+        text = lese_text_datei(text_file_path)
+
+        # Ersetzen der Platzhalter durch die aktuellen Werte
+        text = text.replace("{vers}", str(vers))
+        text = text.replace("{abgerechnet}", str(abgerechnet))
+        text = text.replace("{faktor}", str(faktor))
+
+        # Ausgabe des formatierten Textes
+        st.markdown("### Text mit Werten:")
+        st.write(text)
 
         # ---------- JavaScript‑Snippet ----------
         # Wird nur gerendert, wenn ein Kopier‑Flag existiert
