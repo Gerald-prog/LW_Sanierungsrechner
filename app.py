@@ -145,7 +145,7 @@ if ergebnis is not None:
         st.markdown("### Text mit Werten:")
 
         st.text_input(
-            "Text für Bearbeitungshinweise", value=st.write(text), key="bemerkungstext"
+            "Text für Bearbeitungshinweise", value=f"{text}", key="bemerkungstext"
         )
 
         # ---------- JavaScript‑Snippet ----------
