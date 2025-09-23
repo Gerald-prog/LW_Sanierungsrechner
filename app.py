@@ -144,8 +144,9 @@ if ergebnis is not None:
         # Ausgabe des formatierten Textes
         st.markdown("### Text mit Werten:")
 
-        with st.expander("Text für Bearbeitungshinweise"):
-            st.write(text)
+        st.text_area(
+            "Text für Bearbeitungshinweise", value=text, height=20, key="bemerkungsfeld"
+        )
 
         # ---------- JavaScript‑Snippet ----------
         # Wird nur gerendert, wenn ein Kopier‑Flag existiert
