@@ -139,7 +139,7 @@ if ergebnis is not None:
         # Ersetzen der Platzhalter durch die aktuellen Werte
         text = text.replace("{vers}", str(vers))
         text = text.replace("{abgerechnet}", str(abgerechnet))
-        text = text.replace("{faktor}", str(faktor))
+        text = text.replace("{faktor}", str(f"{faktor:.3}"))
 
         # Ausgabe des formatierten Textes
         st.markdown("### Text mit Werten:")
