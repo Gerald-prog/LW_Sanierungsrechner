@@ -143,7 +143,10 @@ if ergebnis is not None:
 
         # Ausgabe des formatierten Textes
         st.markdown("### Text mit Werten:")
-        st.write(text)
+
+        st.text_input(
+            "Text für Bearbeitungshinweise", value=st.write(text), key="bemerkungstext"
+        )
 
         # ---------- JavaScript‑Snippet ----------
         # Wird nur gerendert, wenn ein Kopier‑Flag existiert
