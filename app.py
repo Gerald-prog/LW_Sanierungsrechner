@@ -91,21 +91,31 @@ with col1:
         else None
     )
 
-    # -------------------------------------------------
-    # Ausgabe & Kopier‑Buttons
-    # -------------------------------------------------
-    if ergebnis is not None:
-        st.markdown("### Reparaturanteil:")
-        st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
+with col2:
+    faktor = reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
 
-        # Sicherheitsprüfung das ergebnis nicht None ist
-        gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
+    st.text_input(
+        "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
+        value=f"{faktor:.3}",
+        key="faktorfeld",
+    )
 
-        st.text_input(
-            "Menge in Stück",
-            value=str(gerundet) if gerundet is not None else "",
-            key="gerundetfeld",
-        )
+# -------------------------------------------------
+# Ausgabe & Kopier‑Buttons
+# -------------------------------------------------
+if ergebnis is not None:
+
+    st.markdown("### Reparaturanteil:")
+    st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
+
+    # Sicherheitsprüfung das ergebnis nicht None ist
+    gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
+
+    st.text_input(
+        "Menge in Stück",
+        value=str(gerundet) if gerundet is not None else "",
+        key="gerundetfeld",
+    )
 
 # -------------------------------------------------
 # Ausgabe & Kopier‑Buttons
@@ -118,17 +128,6 @@ if ergebnis is not None:
     # ---------- Button Integer ----------
     if st.button("📋 Kopieren (Stück)"):
         st.session_state["copy_text"] = str(gerundet)
-
-    with col2:
-        faktor = (
-            reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
-        )
-
-        st.text_input(
-            "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
-            value=f"{faktor:.3}",
-            key="faktorfeld",
-        )
 
         if st.button("📋 Kopieren"):
             st.session_state["copy_text"] = str(faktor)
