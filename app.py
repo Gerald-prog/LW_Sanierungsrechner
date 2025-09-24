@@ -134,7 +134,7 @@ if ergebnis is not None:
 
         st.text_input(
             "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
-            value=f"{faktor:.3f}" if faktor is not None else "",
+            value=f"{faktor:.3}" if faktor is not None else "",
             key="faktorfeld",
         )
 
