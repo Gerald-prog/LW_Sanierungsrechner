@@ -75,20 +75,20 @@ def stk_setzen(wert, ergebnis):
 # -------------------------------------------------
 st.markdown("## 📊 Reparaturanteil Rechner")
 
-col1, col2 = st.columns([0.5, 0.5])
+# col1, col2 = st.columns([0.5, 0.5])
 
-with col1:
-    vers = parse_float(
-        st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
-    )
-    abgerechnet = parse_float(st.text_input("Abgerechnet:"))
-    mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
+# with col1:
+vers = parse_float(
+    st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
+)
+abgerechnet = parse_float(st.text_input("Abgerechnet:"))
+mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
 
-    ergebnis = (
-        round(berechnen(abgerechnet, mengeneinheit, vers), 3)
-        if all([abgerechnet, mengeneinheit, vers])
-        else None
-    )
+ergebnis = (
+    round(berechnen(abgerechnet, mengeneinheit, vers), 3)
+    if all([abgerechnet, mengeneinheit, vers])
+    else None
+)
 
 
 # -------------------------------------------------
@@ -96,51 +96,51 @@ with col1:
 # -------------------------------------------------
 if ergebnis is not None:
 
-    with col1:
+    # with col1:
 
-        st.markdown("### Reparaturanteil:")
+    st.markdown("### Reparaturanteil:")
 
-        st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
+    st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
 
-        # Sicherheitsprüfung das ergebnis nicht None ist
-        gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
+    # Sicherheitsprüfung das ergebnis nicht None ist
+    gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
 
-        st.text_input(
-            "Menge in Stück",
-            value=str(gerundet) if gerundet is not None else "",
-            key="gerundetfeld",
-        )
+    st.text_input(
+        "Menge in Stück",
+        value=str(gerundet) if gerundet is not None else "",
+        key="gerundetfeld",
+    )
 
-        # ---------- Button Dezimal ----------
-        if st.button("📋 Kopieren (Dezimal)"):
-            st.session_state["copy_text"] = f"{ergebnis:.3f}"
+    # ---------- Button Dezimal ----------
+    if st.button("📋 Kopieren (Dezimal)"):
+        st.session_state["copy_text"] = f"{ergebnis:.3f}"
 
-        # ---------- Button Integer ----------
-        if st.button("📋 Kopieren (Stück)"):
-            st.session_state["copy_text"] = str(gerundet)
+    # ---------- Button Integer ----------
+    if st.button("📋 Kopieren (Stück)"):
+        st.session_state["copy_text"] = str(gerundet)
 
-        # with col2:
-        #     faktor = (
-        #         reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
-        #     )
+    # with col2:
+    #     faktor = (
+    #         reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
+    #     )
 
-        #     st.text_input(
-        #         "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
-        #         value=f"{faktor:.3f}",
-        #         key="faktorfeld",
-        #     )
+    #     st.text_input(
+    #         "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
+    #         value=f"{faktor:.3f}",
+    #         key="faktorfeld",
+    #     )
 
-        #     if st.button("📋 Kopieren"):
-        #         st.session_state["copy_text"] = str(faktor)
+    #     if st.button("📋 Kopieren"):
+    #         st.session_state["copy_text"] = str(faktor)
 
-        # ---------- JavaScript‑Snippet ----------
-        # Wird nur gerendert, wenn ein Kopier‑Flag existiert
-        if "copy_text" in st.session_state:
-            text = st.session_state["copy_text"]
-            # Flag wieder entfernen, damit ein neuer Klick erneut funktioniert
-            del st.session_state["copy_text"]
+    # ---------- JavaScript‑Snippet ----------
+    # Wird nur gerendert, wenn ein Kopier‑Flag existiert
+    if "copy_text" in st.session_state:
+        text = st.session_state["copy_text"]
+        # Flag wieder entfernen, damit ein neuer Klick erneut funktioniert
+        del st.session_state["copy_text"]
 
-            js = f"""
+        js = f"""
             <script>
             // 1️⃣ Fokus sicherstellen
             if (document.hasFocus && !document.hasFocus()) {{
@@ -172,8 +172,8 @@ if ergebnis is not None:
             copyNow("{text}");
             </script>
             """
-            # height=0 → kein sichtbarer Platz
-            components.html(js, height=0)
+        # height=0 → kein sichtbarer Platz
+        components.html(js, height=0)
 
 else:
     st.markdown("📝 Bitte gültige Werte eingeben.")
