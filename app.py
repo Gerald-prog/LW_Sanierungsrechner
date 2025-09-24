@@ -107,10 +107,6 @@ with col1:
             key="gerundetfeld",
         )
 
-with col2:
-    faktor = reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
-
-
 # -------------------------------------------------
 # Ausgabe & Kopier‑Buttons
 # -------------------------------------------------
