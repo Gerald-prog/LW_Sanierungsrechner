@@ -81,8 +81,12 @@ with col1:
     vers = parse_float(
         st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
     )
-    abgerechnet = parse_float(st.text_input("Abgerechnet:"))
-    mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
+    abgerechnet = parse_float(
+        st.text_input("Abgerechnet:", value="")
+    )  # beim Start leer
+    mengeneinheit = parse_float(
+        st.text_input("Mengeneinheit:", value="")
+    )  # beim Start leer
 
     # Berechnung des Ergebnisses
     ergebnis = (
@@ -96,7 +100,7 @@ with col2:
 
     st.text_input(
         "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
-        value=f"{faktor:.3}",
+        value=f"{faktor:.3f}",
         key="faktorfeld",
     )
 
