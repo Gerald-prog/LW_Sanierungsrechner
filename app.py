@@ -4,7 +4,7 @@ import datetime
 import math
 
 # -------------------------------------------------
-# Layout & Styles (wie gehabt)
+# Layout & Styles
 # -------------------------------------------------
 st.set_page_config(page_title="LW_Sanierungsrechner", page_icon="📊", layout="centered")
 
@@ -39,10 +39,10 @@ def berechnen(ab, me, ve):
     return None
 
 
-# def reparatur_faktor(ab, ve):
-#     if ab and ve:
-#         return ve / ab
-#     return None
+def reparatur_faktor(ab, ve):
+    if ab and ve:
+        return ve / ab
+    return None
 
 
 def stk_setzen(wert, ergebnis):
@@ -61,13 +61,13 @@ def stk_setzen(wert, ergebnis):
         return math.floor(wert)
 
 
-# def lese_text_datei(file_path):
-#     with open(file_path, "r") as file:
-#         return file.read()
+# Pfad zur Textdatei
+text_file_path = "lw_text.txt"
 
 
-# # Pfad zur Textdatei
-# text_file_path = "text.txt"
+def lese_text_datei(file_path):
+    with open(file_path, "r") as file:
+        return file.read()
 
 
 # -------------------------------------------------
@@ -75,42 +75,50 @@ def stk_setzen(wert, ergebnis):
 # -------------------------------------------------
 st.markdown("## 📊 Reparaturanteil Rechner")
 
-# col1, col2 = st.columns([0.5, 0.5])
+col1, col2 = st.columns([1, 1])
 
-# with col1:
-vers = parse_float(
-    st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
-)
-abgerechnet = parse_float(st.text_input("Abgerechnet:"))
-mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
+with col1:
+    vers = parse_float(
+        st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
+    )
+    abgerechnet = parse_float(st.text_input("Abgerechnet:"))
+    mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
 
-ergebnis = (
-    round(berechnen(abgerechnet, mengeneinheit, vers), 3)
-    if all([abgerechnet, mengeneinheit, vers])
-    else None
-)
+    # Berechnung des Ergebnisses
+    ergebnis = (
+        round(berechnen(abgerechnet, mengeneinheit, vers), 3)
+        if all([abgerechnet, mengeneinheit, vers])
+        else None
+    )
 
+    # -------------------------------------------------
+    # Ausgabe & Kopier‑Buttons
+    # -------------------------------------------------
+    if ergebnis is not None:
+        st.markdown("### Reparaturanteil:")
+        st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
+
+        # Sicherheitsprüfung das ergebnis nicht None ist
+        gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
+
+        st.text_input(
+            "Menge in Stück",
+            value=str(gerundet) if gerundet is not None else "",
+            key="gerundetfeld",
+        )
+
+with col2:
+    faktor = reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
+    st.text_input(
+        "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
+        value=f"{faktor:.3f}" if faktor is not None else "",
+        key="faktorfeld",
+    )
 
 # -------------------------------------------------
 # Ausgabe & Kopier‑Buttons
 # -------------------------------------------------
 if ergebnis is not None:
-
-    # with col1:
-
-    st.markdown("### Reparaturanteil:")
-
-    st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
-
-    # Sicherheitsprüfung das ergebnis nicht None ist
-    gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
-
-    st.text_input(
-        "Menge in Stück",
-        value=str(gerundet) if gerundet is not None else "",
-        key="gerundetfeld",
-    )
-
     # ---------- Button Dezimal ----------
     if st.button("📋 Kopieren (Dezimal)"):
         st.session_state["copy_text"] = f"{ergebnis:.3f}"
@@ -119,28 +127,47 @@ if ergebnis is not None:
     if st.button("📋 Kopieren (Stück)"):
         st.session_state["copy_text"] = str(gerundet)
 
-    # with col2:
-    #     faktor = (
-    #         reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
-    #     )
+    with col2:
+        faktor = (
+            reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
+        )
 
-    #     st.text_input(
-    #         "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
-    #         value=f"{faktor:.3f}",
-    #         key="faktorfeld",
-    #     )
+        st.text_input(
+            "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
+            value=f"{faktor:.3f}" if faktor is not None else "",
+            key="faktorfeld",
+        )
 
-    #     if st.button("📋 Kopieren"):
-    #         st.session_state["copy_text"] = str(faktor)
+        if st.button("📋 Kopieren"):
+            st.session_state["copy_text"] = str(faktor)
 
-    # ---------- JavaScript‑Snippet ----------
-    # Wird nur gerendert, wenn ein Kopier‑Flag existiert
-    if "copy_text" in st.session_state:
-        text = st.session_state["copy_text"]
-        # Flag wieder entfernen, damit ein neuer Klick erneut funktioniert
-        del st.session_state["copy_text"]
+    if ergebnis is not None:
 
-        js = f"""
+        # Lesen der Textdatei
+        text = lese_text_datei(text_file_path)
+
+        # Ersetzen der Platzhalter durch die aktuellen Werte
+        text = text.replace("{vers}", str(vers))
+        text = text.replace("{abgerechnet}", str(abgerechnet))
+        text = text.replace(
+            "{faktor}", str(f"{faktor:.3f}" if faktor is not None else "")
+        )
+
+        # Ausgabe des formatierten Textes
+        st.markdown("### Text mit Werten:")
+
+        st.text_area(
+            "Text für Bearbeitungshinweise", value=text, height=20, key="bemerkungsfeld"
+        )
+
+        # ---------- JavaScript‑Snippet ----------
+        # Wird nur gerendert, wenn ein Kopier‑Flag existiert
+        if "copy_text" in st.session_state:
+            text = st.session_state["copy_text"]
+            # Flag wieder entfernen, damit ein neuer Klick erneut funktioniert
+            del st.session_state["copy_text"]
+
+            js = f"""
             <script>
             // 1️⃣ Fokus sicherstellen
             if (document.hasFocus && !document.hasFocus()) {{
@@ -172,8 +199,8 @@ if ergebnis is not None:
             copyNow("{text}");
             </script>
             """
-        # height=0 → kein sichtbarer Platz
-        components.html(js, height=0)
+            # height=0 → kein sichtbarer Platz
+            components.html(js, height=0)
 
 else:
     st.markdown("📝 Bitte gültige Werte eingeben.")
@@ -186,5 +213,3 @@ st.markdown(
     f"<hr><center style='color:#aaaaaa;'>© {jahr} | Gerald Günther</center>",
     unsafe_allow_html=True,
 )
-
-# nun möchte ich die werte von vers, abgerechnet und faktor mit einem Text in einer separaten textdatei verknüpfen und in streamlit in der col2 ausgeben
