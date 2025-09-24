@@ -61,13 +61,13 @@ def stk_setzen(wert, ergebnis):
         return math.floor(wert)
 
 
-# Pfad zur Textdatei
-text_file_path = "lw_text.txt"
-
-
 def lese_text_datei(file_path):
     with open(file_path, "r") as file:
         return file.read()
+
+
+# Pfad zur Textdatei
+text_file_path = "text.txt"
 
 
 # -------------------------------------------------
@@ -133,21 +133,6 @@ if ergebnis is not None:
         if st.button("📋 Kopieren"):
             st.session_state["copy_text"] = str(faktor)
 
-        # Lesen der Textdatei
-        text = lese_text_datei(text_file_path)
-
-        # Ersetzen der Platzhalter durch die aktuellen Werte
-        text = text.replace("{vers}", str(vers))
-        text = text.replace("{abgerechnet}", str(abgerechnet))
-        text = text.replace("{faktor}", str(f"{faktor:.3}"))
-
-        # Ausgabe des formatierten Textes
-        st.markdown("### Text mit Werten:")
-
-        st.text_area(
-            "Text für Bearbeitungshinweise", value=text, height=20, key="bemerkungsfeld"
-        )
-
         # ---------- JavaScript‑Snippet ----------
         # Wird nur gerendert, wenn ein Kopier‑Flag existiert
         if "copy_text" in st.session_state:
@@ -201,3 +186,5 @@ st.markdown(
     f"<hr><center style='color:#aaaaaa;'>© {jahr} | Gerald Günther</center>",
     unsafe_allow_html=True,
 )
+
+# nun möchte ich die werte von vers, abgerechnet und faktor mit einem Text in einer separaten textdatei verknüpfen und in streamlit in der col2 ausgeben
