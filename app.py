@@ -100,7 +100,7 @@ with col2:
 
     st.text_input(
         "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
-        value=f"{faktor:.3f}" if faktor is not None else "",
+        value=f"{faktor:.3f}",
         key="faktorfeld",
     )
 
