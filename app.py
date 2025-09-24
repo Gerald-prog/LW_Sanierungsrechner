@@ -39,10 +39,10 @@ def berechnen(ab, me, ve):
     return None
 
 
-def reparatur_faktor(ab, ve):
-    if ab and ve:
-        return ve / ab
-    return None
+# def reparatur_faktor(ab, ve):
+#     if ab and ve:
+#         return ve / ab
+#     return None
 
 
 def stk_setzen(wert, ergebnis):
@@ -61,13 +61,13 @@ def stk_setzen(wert, ergebnis):
         return math.floor(wert)
 
 
-def lese_text_datei(file_path):
-    with open(file_path, "r") as file:
-        return file.read()
+# def lese_text_datei(file_path):
+#     with open(file_path, "r") as file:
+#         return file.read()
 
 
-# Pfad zur Textdatei
-text_file_path = "text.txt"
+# # Pfad zur Textdatei
+# text_file_path = "text.txt"
 
 
 # -------------------------------------------------
@@ -119,19 +119,19 @@ if ergebnis is not None:
         if st.button("📋 Kopieren (Stück)"):
             st.session_state["copy_text"] = str(gerundet)
 
-    with col2:
-        faktor = (
-            reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
-        )
+        # with col2:
+        #     faktor = (
+        #         reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
+        #     )
 
-        st.text_input(
-            "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
-            value=f"{faktor:.3f}",
-            key="faktorfeld",
-        )
+        #     st.text_input(
+        #         "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
+        #         value=f"{faktor:.3f}",
+        #         key="faktorfeld",
+        #     )
 
-        if st.button("📋 Kopieren"):
-            st.session_state["copy_text"] = str(faktor)
+        #     if st.button("📋 Kopieren"):
+        #         st.session_state["copy_text"] = str(faktor)
 
         # ---------- JavaScript‑Snippet ----------
         # Wird nur gerendert, wenn ein Kopier‑Flag existiert
