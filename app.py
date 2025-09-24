@@ -109,11 +109,7 @@ with col1:
 
 with col2:
     faktor = reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
-    st.text_input(
-        "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
-        value=f"{faktor:.3f}" if faktor is not None else "",
-        key="faktorfeld",
-    )
+
 
 # -------------------------------------------------
 # Ausgabe & Kopier‑Buttons
