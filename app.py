@@ -146,9 +146,10 @@ if ergebnis is not None:
     # Ausgabe des formatierten Textes
     st.markdown("### Text mit Werten:")
 
-    st.text_area(
-        "Text für Bearbeitungshinweise", value=text, height=20, key="bemerkungsfeld"
-    )
+    with col2:
+        st.text_area(
+            "Text für Bearbeitungshinweise", value=text, height=20, key="bemerkungsfeld"
+        )
 
     # ---------- JavaScript‑Snippet ----------
     # Wird nur gerendert, wenn ein Kopier‑Flag existiert
