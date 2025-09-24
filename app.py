@@ -133,66 +133,64 @@ if ergebnis is not None:
         if st.button("📋 Kopieren"):
             st.session_state["copy_text"] = str(faktor)
 
-    if ergebnis is not None:
+if ergebnis is not None:
 
-        # Lesen der Textdatei
-        text = lese_text_datei(text_file_path)
+    # Lesen der Textdatei
+    text = lese_text_datei(text_file_path)
 
-        # Ersetzen der Platzhalter durch die aktuellen Werte
-        text = text.replace("{vers}", str(vers))
-        text = text.replace("{abgerechnet}", str(abgerechnet))
-        text = text.replace(
-            "{faktor}", str(f"{faktor:.3f}" if faktor is not None else "")
-        )
+    # Ersetzen der Platzhalter durch die aktuellen Werte
+    text = text.replace("{vers}", str(vers))
+    text = text.replace("{abgerechnet}", str(abgerechnet))
+    text = text.replace("{faktor}", str(f"{faktor:.3f}" if faktor is not None else ""))
 
-        # Ausgabe des formatierten Textes
-        st.markdown("### Text mit Werten:")
+    # Ausgabe des formatierten Textes
+    st.markdown("### Text mit Werten:")
 
-        st.text_area(
-            "Text für Bearbeitungshinweise", value=text, height=20, key="bemerkungsfeld"
-        )
+    st.text_area(
+        "Text für Bearbeitungshinweise", value=text, height=20, key="bemerkungsfeld"
+    )
 
-        # ---------- JavaScript‑Snippet ----------
-        # Wird nur gerendert, wenn ein Kopier‑Flag existiert
-        if "copy_text" in st.session_state:
-            text = st.session_state["copy_text"]
-            # Flag wieder entfernen, damit ein neuer Klick erneut funktioniert
-            del st.session_state["copy_text"]
+    # ---------- JavaScript‑Snippet ----------
+    # Wird nur gerendert, wenn ein Kopier‑Flag existiert
+    if "copy_text" in st.session_state:
+        text = st.session_state["copy_text"]
+        # Flag wieder entfernen, damit ein neuer Klick erneut funktioniert
+        del st.session_state["copy_text"]
 
-            js = f"""
-            <script>
-            // 1️⃣ Fokus sicherstellen
-            if (document.hasFocus && !document.hasFocus()) {{
-                window.focus();
-            }}
+        js = f"""
+        <script>
+        // 1️⃣ Fokus sicherstellen
+        if (document.hasFocus && !document.hasFocus()) {{
+            window.focus();
+        }}
 
-            // 2️⃣ Kopier‑Funktion (moderne API + Fallback)
-            function copyNow(txt) {{
-                if (navigator.clipboard && navigator.clipboard.writeText) {{
-                    navigator.clipboard.writeText(txt)
-                        .then(() => alert('✔ ' + txt + ' kopiert.'))
-                        .catch(err => alert('⚠️ Kopieren fehlgeschlagen: ' + err));
-                }} else {{
-                    const ta = document.createElement('textarea');
-                    ta.value = txt;
-                    document.body.appendChild(ta);
-                    ta.select();
-                    try {{
-                        document.execCommand('copy');
-                        alert('✔ ' + txt + ' kopiert.');
-                    }} catch (e) {{
-                        alert('⚠️ Kopieren fehlgeschlagen: ' + e);
-                    }}
-                    document.body.removeChild(ta);
+        // 2️⃣ Kopier‑Funktion (moderne API + Fallback)
+        function copyNow(txt) {{
+            if (navigator.clipboard && navigator.clipboard.writeText) {{
+                navigator.clipboard.writeText(txt)
+                    .then(() => alert('✔ ' + txt + ' kopiert.'))
+                    .catch(err => alert('⚠️ Kopieren fehlgeschlagen: ' + err));
+            }} else {{
+                const ta = document.createElement('textarea');
+                ta.value = txt;
+                document.body.appendChild(ta);
+                ta.select();
+                try {{
+                    document.execCommand('copy');
+                    alert('✔ ' + txt + ' kopiert.');
+                }} catch (e) {{
+                    alert('⚠️ Kopieren fehlgeschlagen: ' + e);
                 }}
+                document.body.removeChild(ta);
             }}
+        }}
 
-            // 3️⃣ sofort ausführen
-            copyNow("{text}");
-            </script>
-            """
-            # height=0 → kein sichtbarer Platz
-            components.html(js, height=0)
+        // 3️⃣ sofort ausführen
+        copyNow("{text}");
+        </script>
+        """
+        # height=0 → kein sichtbarer Platz
+        components.html(js, height=0)
 
 else:
     st.markdown("📝 Bitte gültige Werte eingeben.")
