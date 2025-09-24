@@ -61,6 +61,18 @@ def stk_setzen(wert, ergebnis):
         return math.floor(wert)
 
 
+# Hilfsfunktion für Fokus-Reset
+def clear_focus():
+    components.html(
+        """
+        <script>
+        document.activeElement.blur();
+        </script>
+        """,
+        height=0,
+    )
+
+
 # Pfad zur Textdatei
 text_file_path = "lw_text.txt"
 
@@ -94,6 +106,10 @@ with col1:
         if all([abgerechnet, mengeneinheit, vers])
         else None
     )
+
+    # 👇 Fokus nach Enter entfernen
+    clear_focus()
+
 
 with col2:
     faktor = reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
