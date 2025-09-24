@@ -129,6 +129,7 @@ if ergebnis is not None:
     if st.button("📋 Kopieren (Stück)"):
         st.session_state["copy_text"] = str(gerundet)
 
+    with col2:
         if st.button("📋 Kopieren"):
             st.session_state["copy_text"] = str(faktor)
 
