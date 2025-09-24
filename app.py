@@ -144,9 +144,8 @@ if ergebnis is not None:
     text = text.replace("{faktor}", str(f"{faktor:.3f}" if faktor is not None else ""))
 
     # Ausgabe des formatierten Textes
-    st.markdown("### Text mit Werten:")
-
     with col2:
+        st.markdown("### Text mit Werten:")
         st.text_area(
             "Text für Bearbeitungshinweise", value=text, height=20, key="bemerkungsfeld"
         )
