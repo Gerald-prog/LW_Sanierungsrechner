@@ -168,9 +168,12 @@ if ergebnis is not None:
     # Sicherheitsprüfung das ergebnis nicht None ist
     gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
 
-    st.markdown(f"**Menge in Stück:** {gerundet}") if gerundet is not None else None
+    if gerundet is not None:
+        st.markdown(f"**Menge in Stück:** {gerundet}")
+    else:
+        pass
 
-    # debug_print("Menge in Stueck", gerundet)
+    debug_print("Menge in Stueck", gerundet)
 
 
 # -------------------------------------------------
