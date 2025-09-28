@@ -210,7 +210,7 @@ if ergebnis is not None:
         st.text_area(
             "Text für Bearbeitungshinweise",
             value=text,
-            height=50,  # key="bemerkungsfeld"
+            height=150,  # key="bemerkungsfeld"
         )
 
     # ---------- JavaScript‑Snippet ----------
