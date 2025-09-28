@@ -91,7 +91,7 @@ def lese_text_datei(file_path):
 # -------------------------------------------------
 st.markdown("## 📊 Reparaturanteil Rechner")
 
-col1, col2 = st.columns([1, 2, 5])
+col1, col2 = st.columns([1, 2.5])
 
 with col1:
     # Debug-Ausgabe für Versichert
