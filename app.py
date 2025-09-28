@@ -107,16 +107,16 @@ def stk_setzen(wert, ergebnis):
         return math.floor(wert)
 
 
-# # Hilfsfunktion für Fokus-Reset
-# def clear_focus():
-#     components.html(
-#         """
-#         <script>
-#         document.activeElement.blur();
-#         </script>
-#         """,
-#         height=0,
-#     )
+# Hilfsfunktion für Fokus-Reset
+def clear_focus():
+    components.html(
+        """
+        <script>
+        document.activeElement.blur();
+        </script>
+        """,
+        height=0,
+    )
 
 
 # Pfad zur Textdatei
