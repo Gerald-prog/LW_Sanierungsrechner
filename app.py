@@ -199,8 +199,8 @@ if ergebnis is not None:
 
     # Ersetzen der Platzhalter durch die aktuellen Werte
     text = text.replace("{vers}", str(vers))
-    text = text.replace("{abgerechnet}", str(abgerechnet))
-    text = text.replace("{faktor}", str(f"{faktor:.3f}" if faktor is not None else ""))
+    text = text.replace("{abgerechnet}", f"{abgerechnet:.3f}")  # str(abgerechnet))
+    text = text.replace("{faktor}", f"{faktor:.3f}")
 
     # Ausgabe des formatierten Textes
     with col2:
