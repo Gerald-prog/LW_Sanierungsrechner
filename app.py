@@ -3,6 +3,31 @@ import streamlit.components.v1 as components
 import datetime
 import math
 
+
+# Hilfsfunktion um den Fokus von Eingabefeldern zu entfernen
+def remove_focus_script():
+    components.html(
+        """
+            <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                // Entferne den Fokus von allen Eingabefeldern nach Enter
+                const inputs = document.querySelectorAll('input');
+                inputs.forEach(input => {
+                    input.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') {
+                            this.blur(); // Entfernt den Fokus
+                        }
+                    });
+                });
+            });
+            </script>
+            """,
+        height=0,
+    )
+
+
+remove_focus_script()
+
 # -------------------------------------------------
 # Layout & Styles
 # -------------------------------------------------
