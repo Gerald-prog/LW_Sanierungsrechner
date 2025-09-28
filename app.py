@@ -22,7 +22,7 @@ def debug_print(label, value, value_type=None):
 # -------------------------------------------------
 # Layout & Styles
 # -------------------------------------------------
-st.set_page_config(page_title="LW_Sanierungsrechner", page_icon="📊", layout="centered")
+st.set_page_config(page_title="LW_Sanierungsrechner", page_icon="📊", layout="wide")
 
 st.markdown(
     """
