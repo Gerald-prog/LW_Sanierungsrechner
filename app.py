@@ -214,12 +214,8 @@ if ergebnis is not None:
         )
 
         # Button zum Kopieren via JS
-        st.markdown(
-            f"""
-        <button onclick="navigator.clipboard.writeText(`{text}`)">📋 Text kopieren</button>
-        """,
-            unsafe_allow_html=True,
-        )
+        if st.button("📋 Kopieren (Dezimal)"):
+            st.session_state["copy_text"] = f"{text}"
 
     # ---------- JavaScript‑Snippet ----------
     # Wird nur gerendert, wenn ein Kopier‑Flag existiert
