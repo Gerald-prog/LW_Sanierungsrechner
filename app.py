@@ -200,7 +200,7 @@ if ergebnis is not None:
     # Ersetzen der Platzhalter durch die aktuellen Werte
     text = (
         vorlage_text.replace("{vers}", str(vers))
-        .replace("{abgerechnet}", f"{abgerechnet:.3f}")
+        .replace("{abgerechnet}", f"{abgerechnet}")
         .replace("{faktor}", f"{faktor:.3f}")
     )
 
