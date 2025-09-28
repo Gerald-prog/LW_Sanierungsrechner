@@ -112,34 +112,16 @@ with col1:
     # Debug-Ausgabe für Abgerechnet
     debug_print("Abgerechnet (Session State)", st.session_state.abgerechnet_input)
 
-    abgerechnet = parse_float(
-        st.text_input(
-            "Abgerechnet:",
-            value=st.session_state.abgerechnet_input,
-            key="abgerechnet_input_field",
-        )
-    )
-    debug_print("Abgerechnet (Nach parse_float)", abgerechnet)
+    abgerechnet = parse_float(st.text_input("Abgerechnet:"))
 
-    st.session_state.abgerechnet_input = (
-        str(abgerechnet) if abgerechnet is not None else ""
-    )
+    debug_print("Abgerechnet (Nach parse_float)", abgerechnet)
 
     # Debug-Ausgabe für Mengeneinheit
     debug_print("Mengeneinheit (Session State)", st.session_state.mengeneinheit_input)
 
-    mengeneinheit = parse_float(
-        st.text_input(
-            "Mengeneinheit:",
-            value=st.session_state.mengeneinheit_input,
-            key="mengeneinheit_input_field",
-        )
-    )
-    debug_print("Mengeneinheit (Nach parse_float)", mengeneinheit)
+    mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
 
-    st.session_state.mengeneinheit_input = (
-        str(mengeneinheit) if mengeneinheit is not None else ""
-    )
+    debug_print("Mengeneinheit (Nach parse_float)", mengeneinheit)
 
     # Debug-Ausgabe für Berechnung
     debug_print(
