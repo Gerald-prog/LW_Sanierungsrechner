@@ -102,12 +102,29 @@ with col1:
     vers = parse_float(
         st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
     )
+
+    # bei Start leer, danach immer der letzte Wert
     abgerechnet = parse_float(
-        st.text_input("Abgerechnet:", value="")
-    )  # beim Start leer
+        st.text_input(
+            "Abgerechnet:",
+            value=st.session_state.abgerechnet_input,
+            key="abgerechnet_input_field",
+        )
+    )
+    st.session_state.abgerechnet_input = (
+        str(abgerechnet) if abgerechnet is not None else ""
+    )
+
     mengeneinheit = parse_float(
-        st.text_input("Mengeneinheit:", value="")
-    )  # beim Start leer
+        st.text_input(
+            "Mengeneinheit:",
+            value=st.session_state.mengeneinheit_input,
+            key="mengeneinheit_input_field",
+        )
+    )
+    st.session_state.mengeneinheit_input = (
+        str(mengeneinheit) if mengeneinheit is not None else ""
+    )
 
     # Berechnung des Ergebnisses
     ergebnis = (
