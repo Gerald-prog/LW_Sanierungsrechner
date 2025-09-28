@@ -64,6 +64,15 @@ auto_recalculate()
 
 # remove_focus_script()
 
+
+def debug_print(label, value, value_type=None):
+    st.sidebar.write(f"🔍 {label}:")
+    st.sidebar.write(f"Wert: {value}")
+    if value_type:
+        st.sidebar.write(f"Typ: {type(value)}")
+    st.sidebar.write("---")
+
+
 # -------------------------------------------------
 # Layout & Styles
 # -------------------------------------------------
@@ -151,6 +160,9 @@ st.markdown("## 📊 Reparaturanteil Rechner")
 col1, col2 = st.columns([1, 1])
 
 with col1:
+    # Debug-Ausgabe für Versichert
+    debug_print("Versichert (Eingabe)", str(VERS_DEFAULT))
+
     # Initialisieren der Session State Variablen, falls nicht vorhanden
     if "vers_input" not in st.session_state:
         st.session_state.vers_input = str(VERS_DEFAULT)
@@ -163,8 +175,9 @@ with col1:
     vers = parse_float(
         st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
     )
+    # Debug-Ausgabe für Abgerechnet
+    debug_print("Abgerechnet (Session State)", st.session_state.abgerechnet_input)
 
-    # bei Start leer, danach immer der letzte Wert
     abgerechnet = parse_float(
         st.text_input(
             "Abgerechnet:",
@@ -172,9 +185,14 @@ with col1:
             key="abgerechnet_input_field",
         )
     )
+    debug_print("Abgerechnet (Nach parse_float)", abgerechnet)
+
     st.session_state.abgerechnet_input = (
         str(abgerechnet) if abgerechnet is not None else ""
     )
+
+    # Debug-Ausgabe für Mengeneinheit
+    debug_print("Mengeneinheit (Session State)", st.session_state.mengeneinheit_input)
 
     mengeneinheit = parse_float(
         st.text_input(
@@ -183,8 +201,20 @@ with col1:
             key="mengeneinheit_input_field",
         )
     )
+    debug_print("Mengeneinheit (Nach parse_float)", mengeneinheit)
+
     st.session_state.mengeneinheit_input = (
         str(mengeneinheit) if mengeneinheit is not None else ""
+    )
+
+    # Debug-Ausgabe für Berechnung
+    debug_print(
+        "Berechnungs-Parameter",
+        {
+            "Abgerechnet": abgerechnet,
+            "Mengeneinheit": mengeneinheit,
+            "Versichert": vers,
+        },
     )
 
     # Berechnung des Ergebnisses
@@ -194,12 +224,19 @@ with col1:
         else None
     )
 
-    # 👇 Fokus nach Enter entfernen
-    clear_focus()
+    debug_print("Ergebnis", ergebnis)
 
 
 with col2:
+
+    debug_print(
+        "Faktor-Berechnung (Parameter)",
+        {"Abgerechnet": abgerechnet, "Versichert": vers},
+    )
+
     faktor = reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
+
+    debug_print("Faktor", faktor)
 
     st.text_input(
         "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
