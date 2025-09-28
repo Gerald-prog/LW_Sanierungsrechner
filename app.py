@@ -150,10 +150,10 @@ with col2:
 
     debug_print("Faktor", faktor)
 
-    st.text_input(
-        "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
-        value=f"{faktor}" if faktor is not None else "",
-        key="faktorfeld",
+    st.markdown(
+        f"**Reparatur-Faktor (für Eintrag im Bemerkungstext):**{faktor:.3f}"
+        if faktor is not None
+        else ""
     )
 
 # -------------------------------------------------
