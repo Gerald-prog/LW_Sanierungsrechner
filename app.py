@@ -213,8 +213,12 @@ if ergebnis is not None:
             height=150,  # key="bemerkungsfeld"
         )
 
-        if st.button("📋 Text kopieren"):
-            st.session_state["copy_text"] = str(text)
+        st.download_button(
+            label="📋 Text kopieren",
+            data=text,
+            file_name="fertiger_text.txt",
+            mime="text/plain",
+        )
 
     # ---------- JavaScript‑Snippet ----------
     # Wird nur gerendert, wenn ein Kopier‑Flag existiert
