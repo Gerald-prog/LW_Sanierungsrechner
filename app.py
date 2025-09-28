@@ -97,13 +97,13 @@ with col1:
     # Debug-Ausgabe für Versichert
     debug_print("Versichert (Eingabe)", str(VERS_DEFAULT))
 
-    # # Initialisieren der Session State Variablen, falls nicht vorhanden
-    # if "vers_input" not in st.session_state:
-    #     st.session_state.vers_input = str(VERS_DEFAULT)
-    # if "abgerechnet_input" not in st.session_state:
-    #     st.session_state.abgerechnet_input = ""
-    # if "mengeneinheit_input" not in st.session_state:
-    #     st.session_state.mengeneinheit_input = ""
+    # Initialisieren der Session State Variablen, falls nicht vorhanden
+    if "vers_input" not in st.session_state:
+        st.session_state.vers_input = str(VERS_DEFAULT)
+    if "abgerechnet_input" not in st.session_state:
+        st.session_state.abgerechnet_input = ""
+    if "mengeneinheit_input" not in st.session_state:
+        st.session_state.mengeneinheit_input = ""
 
     # Eingabefelder mit Session State (dynamische Berechnung)
     vers = parse_float(
