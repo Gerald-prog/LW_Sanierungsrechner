@@ -213,12 +213,13 @@ if ergebnis is not None:
             height=150,  # key="bemerkungsfeld"
         )
 
-        st.download_button(
-            label="📋 Text kopieren",
-            data=text,
-            file_name="fertiger_text.txt",
-            mime="text/plain",
-        )
+        # Button zum Kopieren via JS
+    st.markdown(
+        f"""
+    <button onclick="navigator.clipboard.writeText(`{text}`)">📋 Text kopieren</button>
+    """,
+        unsafe_allow_html=True,
+    )
 
     # ---------- JavaScript‑Snippet ----------
     # Wird nur gerendert, wenn ein Kopier‑Flag existiert
