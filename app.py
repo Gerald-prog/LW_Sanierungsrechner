@@ -206,7 +206,7 @@ if ergebnis is not None:
     with col2:
         st.markdown("### Text mit Werten:")
         st.text_area(
-            "Text für Bearbeitungshinweise", value=text, height=25, key="bemerkungsfeld"
+            "Text für Bearbeitungshinweise", value=text, height=30, key="bemerkungsfeld"
         )
 
     # ---------- JavaScript‑Snippet ----------
