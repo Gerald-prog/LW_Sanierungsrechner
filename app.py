@@ -213,6 +213,9 @@ if ergebnis is not None:
             height=150,  # key="bemerkungsfeld"
         )
 
+        if st.button("📋 Text kopieren"):
+            st.session_state["copy_text"] = str(text)
+
     # ---------- JavaScript‑Snippet ----------
     # Wird nur gerendert, wenn ein Kopier‑Flag existiert
     if "copy_text" in st.session_state:
