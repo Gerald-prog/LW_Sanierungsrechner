@@ -214,7 +214,7 @@ if ergebnis is not None:
         )
 
         # Button zum Kopieren via JS
-        if st.button("📋 Kopieren (Dezimal)"):
+        if st.button("📋 Kopieren Text"):
             st.session_state["copy_text"] = f"{text}"
 
     # ---------- JavaScript‑Snippet ----------
