@@ -170,7 +170,7 @@ if ergebnis is not None:
 
     st.markdown(f"**Menge in Stück:** {gerundet}") if gerundet is not None else None
 
-    debug_print("Menge in Stueck", gerundet)
+    # debug_print("Menge in Stueck", gerundet)
 
 
 # -------------------------------------------------
