@@ -10,35 +10,35 @@ import datetime
 import math
 
 
-# Debugging-Funktion für dynamische Neuberechnung
-def auto_recalculate():
-    components.html(
-        """
-        <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const inputs = document.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    // Erzwinge Neuberechnung
-                    window.location.reload();
-                });
-                
-                input.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        // Erzwinge Neuberechnung nach Enter
-                        window.location.reload();
-                    }
-                });
-            });
-        });
-        </script>
-        """,
-        height=0,
-    )
+# # Debugging-Funktion für dynamische Neuberechnung
+# def auto_recalculate():
+#     components.html(
+#         """
+#         <script>
+#         document.addEventListener('DOMContentLoaded', (event) => {
+#             const inputs = document.querySelectorAll('input');
+#             inputs.forEach(input => {
+#                 input.addEventListener('change', function() {
+#                     // Erzwinge Neuberechnung
+#                     window.location.reload();
+#                 });
+
+#                 input.addEventListener('keydown', function(e) {
+#                     if (e.key === 'Enter') {
+#                         // Erzwinge Neuberechnung nach Enter
+#                         window.location.reload();
+#                     }
+#                 });
+#             });
+#         });
+#         </script>
+#         """,
+#         height=0,
+#     )
 
 
-# Aufruf der Debugging-Funktion
-auto_recalculate()
+# # Aufruf der Debugging-Funktion
+# auto_recalculate()
 
 
 def debug_print(label, value, value_type=None):
@@ -107,16 +107,16 @@ def stk_setzen(wert, ergebnis):
         return math.floor(wert)
 
 
-# Hilfsfunktion für Fokus-Reset
-def clear_focus():
-    components.html(
-        """
-        <script>
-        document.activeElement.blur();
-        </script>
-        """,
-        height=0,
-    )
+# # Hilfsfunktion für Fokus-Reset
+# def clear_focus():
+#     components.html(
+#         """
+#         <script>
+#         document.activeElement.blur();
+#         </script>
+#         """,
+#         height=0,
+#     )
 
 
 # Pfad zur Textdatei
@@ -226,6 +226,7 @@ with col2:
 if ergebnis is not None:
 
     st.markdown("### Reparaturanteil:")
+
     st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
 
     # Sicherheitsprüfung das ergebnis nicht None ist
