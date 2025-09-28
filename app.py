@@ -181,7 +181,7 @@ if ergebnis is not None:
         value=str(gerundet) if gerundet is not None else "",
         key="gerundetfeld",
     )
-
+    debug_print("Menge in Stueck", gerundet)
 # -------------------------------------------------
 # Ausgabe & Kopier‑Buttons
 # -------------------------------------------------
