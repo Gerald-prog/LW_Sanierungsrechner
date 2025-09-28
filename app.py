@@ -195,12 +195,14 @@ if ergebnis is not None:
 if ergebnis is not None:
 
     # Lesen der Textdatei
-    text = lese_text_datei(text_file_path)
+    vorlage_text = lese_text_datei(text_file_path)
 
     # Ersetzen der Platzhalter durch die aktuellen Werte
-    text = text.replace("{vers}", str(vers))
-    text = text.replace("{abgerechnet}", f"{abgerechnet:.3f}")  # str(abgerechnet))
-    text = text.replace("{faktor}", f"{faktor:.3f}")
+    text = (
+        vorlage_text.replace("{vers}", str(vers))
+        .replace("{abgerechnet}", f"{abgerechnet:.3f}")
+        .replace("{faktor}", f"{faktor:.3f}")
+    )
 
     # Ausgabe des formatierten Textes
     with col2:
