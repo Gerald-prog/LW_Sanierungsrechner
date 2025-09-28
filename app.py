@@ -213,7 +213,7 @@ if ergebnis is not None:
             height=150,  # key="bemerkungsfeld"
         )
 
-        if st.button("📋 Kopieren Text(funktioniert noch nicht)"):
+        if st.button("📋 Kopieren Text (funktioniert noch nicht)"):
             st.session_state["copy_text"] = str(text)
 
     # ---------- JavaScript‑Snippet ----------
