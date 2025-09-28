@@ -117,7 +117,7 @@ with col1:
     debug_print("Abgerechnet (Nach parse_float)", abgerechnet)
 
     # Debug-Ausgabe für Mengeneinheit
-    debug_print("Mengeneinheit (Session State)", st.session_state.mengeneinheit_input)
+    # debug_print("Mengeneinheit (Session State)", st.session_state.mengeneinheit_input)
 
     mengeneinheit = parse_float(st.text_input("Mengeneinheit:"))
 
