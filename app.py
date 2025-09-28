@@ -163,7 +163,7 @@ if ergebnis is not None:
 
     st.markdown("### Reparaturanteil:")
 
-    st.text("Ergebnis", value=f"{ergebnis:.3f}")
+    st.text(f"Ergebnis: {ergebnis:.3f}")
 
     # Sicherheitsprüfung das ergebnis nicht None ist
     gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
