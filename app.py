@@ -82,7 +82,7 @@ text_file_path = "lw_text.txt"
 
 
 def lese_text_datei(file_path):
-    with open(file_path, "r") as file:
+    with open(file_path, "r", encoding="utf8") as file:
         return file.read()
 
 
