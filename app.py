@@ -210,13 +210,17 @@ with col2:
         {"Abgerechnet": abgerechnet, "Versichert": vers},
     )
 
-    faktor = reparatur_faktor(abgerechnet, vers) if all([abgerechnet, vers]) else None
+    faktor = (
+        round(reparatur_faktor(abgerechnet, vers), 3)
+        if all([abgerechnet, vers])
+        else None
+    )
 
     debug_print("Faktor", faktor)
 
     st.text_input(
         "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
-        value=f"{faktor:.3}" if faktor is not None else "",
+        value=f"{faktor:.3f}" if faktor is not None else "",
         key="faktorfeld",
     )
 
