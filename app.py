@@ -110,7 +110,7 @@ with col1:
         st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
     )
     # Debug-Ausgabe für Abgerechnet
-    debug_print("Abgerechnet (Session State)", st.session_state.abgerechnet_input)
+    debug_print("Abgerechnet (Session State)", st.text_input("Abgerechnet:", value=""))
 
     abgerechnet = parse_float(st.text_input("Abgerechnet:"))
 
