@@ -90,6 +90,15 @@ st.markdown("## 📊 Reparaturanteil Rechner")
 col1, col2 = st.columns([1, 1])
 
 with col1:
+    # Initialisieren der Session State Variablen, falls nicht vorhanden
+    if "vers_input" not in st.session_state:
+        st.session_state.vers_input = str(VERS_DEFAULT)
+    if "abgerechnet_input" not in st.session_state:
+        st.session_state.abgerechnet_input = ""
+    if "mengeneinheit_input" not in st.session_state:
+        st.session_state.mengeneinheit_input = ""
+
+    # Eingabefelder mit Session State (dynamische Berechnung)
     vers = parse_float(
         st.text_input("Versichert (Standard = 3 lfm.):", value=str(VERS_DEFAULT))
     )
