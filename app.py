@@ -10,37 +10,7 @@ import datetime
 import math
 
 
-# # Debugging-Funktion für dynamische Neuberechnung
-# def auto_recalculate():
-#     components.html(
-#         """
-#         <script>
-#         document.addEventListener('DOMContentLoaded', (event) => {
-#             const inputs = document.querySelectorAll('input');
-#             inputs.forEach(input => {
-#                 input.addEventListener('change', function() {
-#                     // Erzwinge Neuberechnung
-#                     window.location.reload();
-#                 });
-
-#                 input.addEventListener('keydown', function(e) {
-#                     if (e.key === 'Enter') {
-#                         // Erzwinge Neuberechnung nach Enter
-#                         window.location.reload();
-#                     }
-#                 });
-#             });
-#         });
-#         </script>
-#         """,
-#         height=0,
-#     )
-
-
-# # Aufruf der Debugging-Funktion
-# auto_recalculate()
-
-
+# Debug-Hilfsfunktion
 def debug_print(label, value, value_type=None):
     st.sidebar.write(f"🔍 {label}:")
     st.sidebar.write(f"Wert: {value}")
@@ -107,18 +77,6 @@ def stk_setzen(wert, ergebnis):
         return math.floor(wert)
 
 
-# # Hilfsfunktion für Fokus-Reset
-# def clear_focus():
-#     components.html(
-#         """
-#         <script>
-#         document.activeElement.blur();
-#         </script>
-#         """,
-#         height=0,
-#     )
-
-
 # Pfad zur Textdatei
 text_file_path = "lw_text.txt"
 
@@ -139,13 +97,13 @@ with col1:
     # Debug-Ausgabe für Versichert
     debug_print("Versichert (Eingabe)", str(VERS_DEFAULT))
 
-    # Initialisieren der Session State Variablen, falls nicht vorhanden
-    if "vers_input" not in st.session_state:
-        st.session_state.vers_input = str(VERS_DEFAULT)
-    if "abgerechnet_input" not in st.session_state:
-        st.session_state.abgerechnet_input = ""
-    if "mengeneinheit_input" not in st.session_state:
-        st.session_state.mengeneinheit_input = ""
+    # # Initialisieren der Session State Variablen, falls nicht vorhanden
+    # if "vers_input" not in st.session_state:
+    #     st.session_state.vers_input = str(VERS_DEFAULT)
+    # if "abgerechnet_input" not in st.session_state:
+    #     st.session_state.abgerechnet_input = ""
+    # if "mengeneinheit_input" not in st.session_state:
+    #     st.session_state.mengeneinheit_input = ""
 
     # Eingabefelder mit Session State (dynamische Berechnung)
     vers = parse_float(
@@ -231,7 +189,7 @@ if ergebnis is not None:
 
     st.markdown("### Reparaturanteil:")
 
-    st.text_input("Ergebnis", value=f"{ergebnis:.3f}", key="ergebnisfeld")
+    st.text_input("Ergebnis", value=f"{ergebnis}", key="ergebnisfeld")
 
     # Sicherheitsprüfung das ergebnis nicht None ist
     gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
