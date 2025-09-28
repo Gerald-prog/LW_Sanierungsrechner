@@ -168,11 +168,8 @@ if ergebnis is not None:
     # Sicherheitsprüfung das ergebnis nicht None ist
     gerundet = stk_setzen(ergebnis, ergebnis) if ergebnis is not None else None
 
-    st.text(
-        "Menge in Stück",
-        value=str(gerundet) if gerundet is not None else "",
-        key="gerundetfeld",
-    )
+    st.text(f"Menge in Stück: {gerundet}") if gerundet is not None else None
+
     debug_print("Menge in Stueck", gerundet)
 
 
