@@ -40,30 +40,6 @@ def auto_recalculate():
 # Aufruf der Debugging-Funktion
 auto_recalculate()
 
-# # Hilfsfunktion um den Fokus von Eingabefeldern zu entfernen
-# def remove_focus_script():
-#     components.html(
-#         """
-#             <script>
-#             document.addEventListener('DOMContentLoaded', (event) => {
-#                 // Entferne den Fokus von allen Eingabefeldern nach Enter
-#                 const inputs = document.querySelectorAll('input');
-#                 inputs.forEach(input => {
-#                     input.addEventListener('keydown', function(e) {
-#                         if (e.key === 'Enter') {
-#                             this.blur(); // Entfernt den Fokus
-#                         }
-#                     });
-#                 });
-#             });
-#             </script>
-#             """,
-#         height=0,
-#     )
-
-
-# remove_focus_script()
-
 
 def debug_print(label, value, value_type=None):
     st.sidebar.write(f"🔍 {label}:")
@@ -240,7 +216,7 @@ with col2:
 
     st.text_input(
         "Reparatur-Faktor (für Eintrag im Bemerkungstext)",
-        value=f"{faktor:.3f}" if faktor is not None else "",
+        value=f"{faktor:.3}" if faktor is not None else "",
         key="faktorfeld",
     )
 
