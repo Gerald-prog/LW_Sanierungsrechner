@@ -151,7 +151,7 @@ with col2:
     debug_print("Faktor", faktor)
 
     st.markdown(
-        f"**Reparatur-Faktor (für Eintrag im Bemerkungstext):**   {faktor:.3f}"
+        f"**Reparatur-Faktor (für Eintrag im Bemerkungstext):**&nbsp;&nbsp;&nbsp; {faktor:.3f}"
         if faktor is not None
         else ""
     )
