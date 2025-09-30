@@ -4,12 +4,6 @@ import datetime
 import math
 
 
-import streamlit as st
-import streamlit.components.v1 as components
-import datetime
-import math
-
-
 # Debug-Hilfsfunktion
 def debug_print(label, value, value_type=None):
     st.sidebar.write(f"🔍 {label}:")
